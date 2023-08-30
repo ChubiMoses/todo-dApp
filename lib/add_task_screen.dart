@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:note_dapp/model/task.dart';
-import 'package:note_dapp/service/contract_service.dart';
+import 'package:note_dapp/provider/todo_provider.dart';
 
 class AddTaskScreen extends ConsumerWidget {
   final Task? task;

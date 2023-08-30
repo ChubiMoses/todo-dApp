@@ -1,13 +1,21 @@
+
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
 import 'package:note_dapp/model/task.dart';
 import 'package:note_dapp/utils/constants.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:web_socket_channel/io.dart';
 
-class TodoProvider extends ChangeNotifier{
+final _contractProvider = ChangeNotifierProvider((ref) => TodoProvider());
+
+class TodoProvider extends ChangeNotifier {
+static AlwaysAliveProviderBase<TodoProvider> get provider =>_contractProvider;
+
   final String _rpcURL = Constants().rpcURL;
   final String _wsURL =  Constants().wsURL;
   final String _privacyKey = Constants().privacyKey;
@@ -29,20 +37,19 @@ class TodoProvider extends ChangeNotifier{
   bool loading = true;
 
 
-  TodoProvider(context){
-    initialize(context);
+  TodoProvider(){
+    initialize();
   }
 
    //initialize connection to genache
-   initialize(context)async{
+   initialize()async{
     _client = Web3Client(
       _rpcURL, Client(), socketConnector: () {
         return IOWebSocketChannel.connect(_wsURL).cast<String>();
       });
     
     //load abi(api for smart contracts)
-    final abiStringFile = await DefaultAssetBundle.of(context).
-    loadString("truffle-artifacts/$contractName.json");
+    final abiStringFile = await rootBundle.loadString("truffle-artifacts/$contractName.json");
     final abiJson = jsonDecode(abiStringFile);
     final abi = jsonEncode(abiJson['abi']);
 
@@ -69,7 +76,7 @@ class TodoProvider extends ChangeNotifier{
       todos.add(Task(taskName: temp[0], isCompleted: temp[1]));
     }
     isLoading =  false;
-    notifyListeners();
+     notifyListeners();
   }
   
   Future addTask()async{
@@ -118,8 +125,7 @@ class TodoProvider extends ChangeNotifier{
         });
   } 
 
+
+
+
 }
-
-
-
-

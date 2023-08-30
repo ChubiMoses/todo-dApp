@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:note_dapp/add_task_screen.dart';
 import 'package:note_dapp/model/task.dart';
-import 'package:note_dapp/service/contract_service.dart';
+import 'package:note_dapp/provider/todo_provider.dart';
 import 'settings_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
