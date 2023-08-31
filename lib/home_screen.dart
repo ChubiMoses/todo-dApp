@@ -83,35 +83,53 @@ class HomeScreen extends ConsumerWidget {
             )
           ],
         ),
-        body:loading ? 
-          const Center(child: CircularProgressIndicator()) :
+        body:
           ListView.builder(
             itemBuilder: (context, int index){
               Task task =  todoProvider.todos[index];
-              return   ListTile(
-                title: Text(
-                  task.taskName,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    decoration: !task.isCompleted
-                        ? TextDecoration.none
-                        : TextDecoration.lineThrough,
+              return   Container(
+                  margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  decoration: BoxDecoration(
+                    color:Theme.of(context).cardColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        offset: const Offset(4, 4),
+                        blurRadius: 10,
+                        color: Colors.grey.withOpacity(.2),
+                      ),
+                      BoxShadow(
+                        offset: const Offset(-3, 0),
+                        blurRadius: 15,
+                        color: Colors.grey.withOpacity(.1),
+                      )
+                    ],
                   ),
+                child: ListTile(
+                  title: Text(
+                    task.taskName,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      decoration: !task.isCompleted
+                          ? TextDecoration.none
+                          : TextDecoration.lineThrough,
+                    ),
+                  ),
+                          
+                  trailing: Checkbox(
+                    onChanged: (value) {
+                      todoProvider.editTask(index, task.taskName, task.isCompleted ? false : true);
+                    },
+                    activeColor: Theme.of(context).primaryColor,
+                    value: task.isCompleted ? true : false,
+                  ),
+                  onTap: (){
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) =>  AddTaskScreen(task: task, index: index)));
+                  }
                 ),
-                        
-                trailing: Checkbox(
-                  onChanged: (value) {
-                    todoProvider.editTask(index, task.taskName, task.isCompleted ? false : true);
-                  },
-                  activeColor: Theme.of(context).primaryColor,
-                  value: task.isCompleted ? true : false,
-                ),
-                onTap: (){
-                  Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) =>  AddTaskScreen(task: task, index: index)));
-                }
               );
             }, 
         itemCount: todoProvider.taskCount),

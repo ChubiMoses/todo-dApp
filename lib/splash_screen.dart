@@ -19,7 +19,7 @@ class _SplashState extends State<Splash> {
     Timer(
         Duration(seconds: 1),
         () => Navigator.push(
-            context, MaterialPageRoute(builder: (_) => HomeScreen())));
+            context, MaterialPageRoute(builder: (_) => const HomeScreen())));
   }
 
   Widget build(BuildContext context) {
@@ -28,37 +28,35 @@ class _SplashState extends State<Splash> {
         fit: StackFit.expand,
         children: <Widget>[
           Container(
-            decoration: BoxDecoration(color: Colors.white),
-            child: Column(
+            decoration: const BoxDecoration(color: Colors.white),
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Expanded(
                   flex: 2,
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        CircleAvatar(
-                          backgroundColor: Color.fromRGBO(250, 250, 250, 1),
-                          radius: 40.0,
-                          child: Icon(
-                            Icons.check_rounded,
-                            color: Color(0xFF18D191),
-                            size: 60.0,
-                          ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircleAvatar(
+                        backgroundColor: Color.fromRGBO(250, 250, 250, 1),
+                        radius: 40.0,
+                        child: Icon(
+                          Icons.check_rounded,
+                          color: Color(0xFF18D191),
+                          size: 60.0,
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 20.0),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.0),
+                      ),
+                      Text(
+                        "Task Manager",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 20.0,
                         ),
-                        Text(
-                          "Task Manager",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(
